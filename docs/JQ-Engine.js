@@ -17,10 +17,11 @@ class Scene{
 }
 
 class Texture{
-	constructor(url, cellWidth, cellHeight){
-		this.cellWidth = cellWidth
-		this.cellHeight = cellHeight
+	constructor(url, cols, rows, defaultCell = [0, 0]){
 		this.url = url
+		this.defaultCell = defaultCell
+		this.cols = cols
+		this.rows = rows
 	}
 }
 
@@ -32,6 +33,12 @@ class Sprite{
 		this.texture = texture
 
 		this.position = {x:0, y:0}
+
+		this.animationTick = 0
+		this.frameNum = 0
+		this.currentAnimation = [texture.defaultCell]
+		this.currentFrame = this.currentAnimation[this.animationTick]
+		this.ticksBetweenFrames  = 100
 	}
 	addToScene(scene){
 		if(scene instanceof Scene){
@@ -40,7 +47,7 @@ class Sprite{
 			$(`#${this.id}`).css("height", `${this.height}px`)
 
 			$(`#${this.id}`).css("background-image", `url(${this.texture.url})`)
-			$(`#${this.id}`).css("background-size", `${this.width}px ${this.height}px`)
+			$(`#${this.id}`).css("background-size", `${this.width*this.texture.cols}px ${this.height*this.texture.rows}px`)
 		}else{
 			console.log("invalid argument")
 		}
@@ -57,7 +64,23 @@ class Sprite{
 		this.position.y += y
 		$(`#${this.id}`).css("left", `${this.position.x}px`)
 		$(`#${this.id}`).css("top", `${this.position.y}px`)
-		console.log(this.position)
+	}
+	setAnimation(frames, frameDelay, frame = 0){
+		this.currentAnimation = frames
+		this.frameNum = frame
+		this.ticksBetweenFrames = frameDelay
+	}
+	update(){
+		this.animationTick ++
+		if(this.animationTick > this.ticksBetweenFrames){
+			this.animationTick = 0
+			this.frameNum = (this.frameNum+1)%this.currentAnimation.length
+			this.currentFrame = this.currentAnimation[this.frameNum]
+		}
+		const bgOffsetX = this.currentFrame[0]*this.width*-1
+		const bgOffsetY = this.currentFrame[1]*this.height*-1
+
+		$(`#${this.id}`).css("background-position", `${bgOffsetX}px ${bgOffsetY}px`)
 	}
 
 }
