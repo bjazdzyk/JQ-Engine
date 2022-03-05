@@ -6,7 +6,13 @@ class Scene{
 		this.id = id
 		let css = "width:" + this.width + "px;height:" + this.height + "px;background-color:"+ this.bgColor+";"
 		$("body").append(`<div id="${this.id}" class="scene" style=${css}></div>`)
-
+	}
+	addSprite(sprite){
+		if(sprite instanceof Sprite){
+			sprite.addToScene(this)
+		}else{
+			console.log("invalid argument")
+		}
 	}
 }
 
@@ -23,17 +29,22 @@ class Sprite{
 		this.id = id
 		this.width = width
 		this.height = height
-
-		$("body").append(`<div id="${this.id}" class="sprite"></div>`)
-		$(`#${this.id}`).css("width", `${this.width}px`)
-		$(`#${this.id}`).css("height", `${this.height}px`)
-
 		this.texture = texture
 
-		$(`#${this.id}`).css("background-image", `url(${this.texture.url})`)
-		$(`#${this.id}`).css("background-size", `${this.width}px ${this.height}px`)
-
 		this.position = {x:0, y:0}
+	}
+	addToScene(scene){
+		if(scene instanceof Scene){
+			$(`#${scene.id}`).append(`<div id="${this.id}" class="sprite"></div>`)
+			$(`#${this.id}`).css("width", `${this.width}px`)
+			$(`#${this.id}`).css("height", `${this.height}px`)
+
+			$(`#${this.id}`).css("background-image", `url(${this.texture.url})`)
+			$(`#${this.id}`).css("background-size", `${this.width}px ${this.height}px`)
+		}else{
+			console.log("invalid argument")
+		}
+
 	}
 	setPos(x, y){
 		this.position.x = x
