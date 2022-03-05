@@ -10,16 +10,28 @@ class Scene{
 	}
 }
 
+class Texture{
+	constructor(url, cellWidth, cellHeight){
+		this.cellWidth = cellWidth
+		this.cellHeight = cellHeight
+		this.url = url
+	}
+}
+
 class Sprite{
-	constructor(id, width, height){
+	constructor(id, width, height, texture){
 		this.id = id
 		this.width = width
 		this.height = height
-		let css = `width:${this.width}px;height:${this.height}px;`
-		$("body").append(`<div id="${this.id}" class="sprite"></div>`)
 
+		$("body").append(`<div id="${this.id}" class="sprite"></div>`)
 		$(`#${this.id}`).css("width", `${this.width}px`)
 		$(`#${this.id}`).css("height", `${this.height}px`)
+
+		this.texture = texture
+
+		$(`#${this.id}`).css("background-image", `url(${this.texture.url})`)
+		$(`#${this.id}`).css("background-size", `${this.width}px ${this.height}px`)
 
 		this.position = {x:0, y:0}
 	}
