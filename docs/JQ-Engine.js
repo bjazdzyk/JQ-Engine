@@ -52,5 +52,12 @@ class Sprite{
 		$(`#${this.id}`).css("left", `${this.position.x}px`)
 		$(`#${this.id}`).css("top", `${this.position.y}px`)
 	}
+	move(x, y){
+		this.position.x += x
+		this.position.y += y
+		$(`#${this.id}`).css("left", `${this.position.x}px`)
+		$(`#${this.id}`).css("top", `${this.position.y}px`)
+		console.log(this.position)
+	}
 
 }
