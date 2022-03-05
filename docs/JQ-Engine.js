@@ -39,6 +39,8 @@ class Sprite{
 		this.currentAnimation = [texture.defaultCell]
 		this.currentFrame = this.currentAnimation[this.animationTick]
 		this.ticksBetweenFrames  = 100
+
+		this.animationOffset = {x:0, y:0}
 	}
 	addToScene(scene){
 		if(scene instanceof Scene){
@@ -56,14 +58,10 @@ class Sprite{
 	setPos(x, y){
 		this.position.x = x
 		this.position.y = y
-		$(`#${this.id}`).css("left", `${this.position.x}px`)
-		$(`#${this.id}`).css("top", `${this.position.y}px`)
 	}
 	move(x, y){
 		this.position.x += x
 		this.position.y += y
-		$(`#${this.id}`).css("left", `${this.position.x}px`)
-		$(`#${this.id}`).css("top", `${this.position.y}px`)
 	}
 	setAnimation(frames, frameDelay, frame = 0){
 		this.currentAnimation = frames
@@ -71,6 +69,10 @@ class Sprite{
 		this.ticksBetweenFrames = frameDelay
 	}
 	update(){
+
+		$(`#${this.id}`).css("left", `${this.position.x + this.animationOffset.x}px`)
+		$(`#${this.id}`).css("top", `${this.position.y + this.animationOffset.y}px`)
+
 		this.animationTick ++
 		if(this.animationTick > this.ticksBetweenFrames){
 			this.animationTick = 0
@@ -79,6 +81,17 @@ class Sprite{
 		}
 		const bgOffsetX = this.currentFrame[0]*this.width*-1
 		const bgOffsetY = this.currentFrame[1]*this.height*-1
+		if(this.currentFrame[2]){
+			const offset = this.currentFrame[2]
+			if(offset.x){
+				this.animationOffset.x = offset.x
+			}
+			if(offset.y){
+				this.animationOffset.y = offset.y
+			}
+		}else{
+			this.animationOffset = {x:0, y:0}
+		}
 
 		$(`#${this.id}`).css("background-position", `${bgOffsetX}px ${bgOffsetY}px`)
 	}
