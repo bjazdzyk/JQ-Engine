@@ -12,7 +12,7 @@ scene.addSprite(player)
 player.setPos(100, 100)
 
 
-player.setAnimation([[0, 0], [1, 0, {y:2}], [2, 0], [1, 0, {y:2}]], 10)
+player.setAnimation([[0, 0], [1, 0, {y:3}], [2, 0], [1, 0, {y:3}]], 10)
 
 const loop =()=>{
 	requestAnimationFrame(loop)
