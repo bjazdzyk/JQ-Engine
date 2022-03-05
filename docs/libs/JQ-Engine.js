@@ -1,3 +1,15 @@
+$("head").append(`<style>
+.scene{
+	position: fixed;
+}
+
+.sprite{
+	position: relative;
+	margin: 0px;
+	image-rendering: pixelated;
+}
+</style>`)
+
 class Scene{
 	constructor(id, width, height, bgColor="skyblue"){
 		this.width = width
