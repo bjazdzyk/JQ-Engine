@@ -77,6 +77,7 @@ class Sprite{
 		this.ticksBetweenFrames  = 100
 
 		this.animationOffset = {x:0, y:0}
+		this.toggleAnimation = false
 	}
 	addToScene(scene){
 		if(scene instanceof Scene){
@@ -108,28 +109,35 @@ class Sprite{
 
 		$(`#${this.id}`).css("left", `${this.position.x + this.animationOffset.x}px`)
 		$(`#${this.id}`).css("top", `${this.position.y + this.animationOffset.y}px`)
-
-		this.animationTick ++
-		if(this.animationTick > this.ticksBetweenFrames){
-			this.animationTick = 0
-			this.frameNum = (this.frameNum+1)%this.currentAnimation.length
-			this.currentFrame = this.currentAnimation[this.frameNum]
-		}
-		const bgOffsetX = this.currentFrame[0]*this.width*-1
-		const bgOffsetY = this.currentFrame[1]*this.height*-1
-		if(this.currentFrame[2]){
-			const offset = this.currentFrame[2]
-			if(offset.x){
-				this.animationOffset.x = offset.x
+		if(this.toggleAnimation){
+			this.animationTick ++
+			if(this.animationTick > this.ticksBetweenFrames){
+				this.animationTick = 0
+				this.frameNum = (this.frameNum+1)%this.currentAnimation.length
+				this.currentFrame = this.currentAnimation[this.frameNum]
 			}
-			if(offset.y){
-				this.animationOffset.y = offset.y
+			const bgOffsetX = this.currentFrame[0]*this.width*-1
+			const bgOffsetY = this.currentFrame[1]*this.height*-1
+			if(this.currentFrame[2]){
+				const offset = this.currentFrame[2]
+				if(offset.x){
+					this.animationOffset.x = offset.x
+				}
+				if(offset.y){
+					this.animationOffset.y = offset.y
+				}
+			}else{
+				this.animationOffset = {x:0, y:0}
 			}
-		}else{
-			this.animationOffset = {x:0, y:0}
-		}
 
-		$(`#${this.id}`).css("background-position", `${bgOffsetX}px ${bgOffsetY}px`)
+			$(`#${this.id}`).css("background-position", `${bgOffsetX}px ${bgOffsetY}px`)
+		}
+	}
+	play(){
+		this.toggleAnimation = true
+	}
+	stop(){
+		this.toggleAnimation = false
 	}
 
 }

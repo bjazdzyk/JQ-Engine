@@ -30,6 +30,11 @@ scene.onKeydown("W", ()=>{
 
 const loop =()=>{
 	requestAnimationFrame(loop)
+	if(keys["KeyA"] || keys["KeyS"] || keys["KeyD"] || keys["KeyW"]){
+		player.play()
+	}else{
+		player.stop()
+	}
 	player.update()
 }
 loop()
