@@ -12,20 +12,23 @@ scene.addSprite(player)
 player.setPos(100, 100)
 
 
-player.setAnimation([[0, 0], [1, 0, {y:3}], [2, 0], [1, 0, {y:3}]], 10)
+player.setAnimation([[0, 0], [1, 0, {y:3}], [2, 0], [1, 0, {y:3}]], 8)
 
 
+const speed = 2
 scene.onKeydown("D", ()=>{
-	player.move(1.5, 0)
+	player.move(speed, 0)
+	player.flip({x:1})
 })
 scene.onKeydown("A", ()=>{
-	player.move(-1.5, 0)
+	player.move(-speed, 0)
+	player.flip({x:-1})
 })
 scene.onKeydown("S", ()=>{
-	player.move(0, 1.5)
+	player.move(0, speed)
 })
 scene.onKeydown("W", ()=>{
-	player.move(0, -1.5)
+	player.move(0, -speed)
 })
 
 const loop =()=>{

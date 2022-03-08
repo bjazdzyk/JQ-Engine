@@ -78,6 +78,7 @@ class Sprite{
 
 		this.animationOffset = {x:0, y:0}
 		this.toggleAnimation = false
+		this.fliped = {x:1, y:1}
 	}
 	addToScene(scene){
 		if(scene instanceof Scene){
@@ -138,6 +139,16 @@ class Sprite{
 	}
 	stop(){
 		this.toggleAnimation = false
+	}
+	flip(axes){
+		this.fliped = axes
+		if(this.fliped.x){
+			console.log()
+			$(`#${this.id}`).css("transform", `scaleX(${this.fliped.x/Math.abs(this.fliped.x)})`)
+		}
+		if(this.fliped.y){
+			$(`#${this.id}`).css("transform", `scaleY(${this.fliped.y/Math.abs(this.fliped.y)})`)
+		}
 	}
 
 }
