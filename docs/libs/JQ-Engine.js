@@ -10,6 +10,27 @@ $("head").append(`<style>
 }
 </style>`)
 
+
+const keys = {}
+const listeners = {}
+
+$("body").keydown((e)=>{
+	keys[e.originalEvent.code] = true
+})
+$("body").keyup((e)=>{
+	keys[e.originalEvent.code] = null
+})
+
+
+const eventListener =()=>{
+	requestAnimationFrame(eventListener)
+	for(const i in listeners){
+		if(keys[i]){
+			listeners[i]()
+		}
+	}
+}
+
 class Scene{
 	constructor(id, width, height, bgColor="skyblue"){
 		this.width = width
@@ -25,6 +46,9 @@ class Scene{
 		}else{
 			console.log("invalid argument")
 		}
+	}
+	onKeydown(key, f){
+		listeners[`Key${key}`] = f
 	}
 }
 
@@ -109,3 +133,4 @@ class Sprite{
 	}
 
 }
+eventListener()
