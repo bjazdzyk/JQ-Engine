@@ -5,7 +5,7 @@ let _H = window.innerHeight
 
 const scene = new Scene("s", _W, _H)
 
-const playerTexture = new Texture("assets/texture.png", 3, 1, [0, 1])
+const playerTexture = new Texture("assets/texture.png", 3, 1, [1, 0])
 const player = new Sprite("p", 60, 60, playerTexture)
 scene.addSprite(player)
 
@@ -32,6 +32,7 @@ scene.onKeydown("W", ()=>{
 })
 
 const loop =()=>{
+	console.log(player.currentFrame)
 	requestAnimationFrame(loop)
 	if(keys["KeyA"] || keys["KeyS"] || keys["KeyD"] || keys["KeyW"]){
 		player.play()

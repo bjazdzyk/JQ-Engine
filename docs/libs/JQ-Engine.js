@@ -143,6 +143,10 @@ class Sprite{
 	}
 	stop(){
 		this.toggleAnimation = false
+		this.currentFrame = this.texture.defaultCell
+		const bgOffsetX = this.currentFrame[0]*this.width*-1
+		const bgOffsetY = this.currentFrame[1]*this.height*-1
+		$(`#${this.id}`).css("background-position", `${bgOffsetX}px ${bgOffsetY}px`)
 	}
 	flip(axes){
 		this.fliped = axes
