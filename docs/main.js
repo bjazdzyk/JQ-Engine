@@ -12,7 +12,7 @@ scene.addSprite(player)
 player.setPos(100, 100)
 
 
-player.setAnimation([[0, 0], [1, 0, {y:3}], [2, 0], [1, 0, {y:3}]], 8)
+player.setAnimation([[0, 0], [1, 0, {y:-4}], [2, 0], [1, 0, {y:-4}]], 8)
 
 
 const speed = 2
